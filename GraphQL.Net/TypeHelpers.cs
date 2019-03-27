@@ -29,8 +29,8 @@ namespace GraphQL.Net
         {
             public SchemaArgument(string argumentName, VariableType argumentType)
             {
-                ArgumentName = argumentName;
-                ArgumentType = argumentType;
+                ArgumentName = argumentName ?? throw new ArgumentNullException(nameof(argumentName));
+                ArgumentType = argumentType ?? throw new ArgumentNullException(nameof(argumentType));
             }
 
             public Info Info => null;

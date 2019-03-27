@@ -340,9 +340,12 @@ type SingleConstructorTypeHandler(rootHandler : ITypeHandler) =
                         let arguments = Array.create<obj> parameters.Length null
                         let mutable i = 0
                         for parameter in parameters do
-                            let value = fields.[parameter.Name].Value
-                            let clrValue = rootHandler.TranslateValueTo(parameter.ParameterType, value)
-                            arguments.[i] <- clrValue
+                            match fields.TryFind(parameter.Name) with
+                            | None -> arguments.[i] <- null
+                            | Some existing ->
+                                let value = existing.Value
+                                let clrValue = rootHandler.TranslateValueTo(parameter.ParameterType, value)
+                                arguments.[i] <- clrValue
                             i <- i + 1
                         cons.Invoke(arguments)
                     | _ -> invalid "Invalid object fields for constructor"

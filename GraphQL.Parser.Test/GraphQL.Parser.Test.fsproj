@@ -9,7 +9,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>GraphQL.Parser.Test</RootNamespace>
     <AssemblyName>GraphQL.Parser.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <Name>GraphQL.Parser.Test</Name>
@@ -77,6 +77,13 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphQL.Net\GraphQL.Net.csproj">
+      <Name>GraphQL.Net</Name>
+      <Project>{530742a1-10d8-4255-837d-43d57b00ee50}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\GraphQL.Parser\GraphQL.Parser.fsproj">
       <Name>GraphQL.Parser</Name>
       <Project>{d5f65a61-8c03-46f1-86aa-7b6da4be25f5}</Project>

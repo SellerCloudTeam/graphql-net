@@ -298,7 +298,7 @@ and CoreVariableType =
                 for KeyValue(name, vt1) in o1 do
                     yield
                         match o2.TryFind(name) with
-                        | None -> false
+                        | None -> true
                         | Some vt2 -> vt1.AcceptsVariableType(vt2)
             } |> Seq.forall id
         | _ -> false
@@ -315,7 +315,7 @@ and CoreVariableType =
                 for KeyValue(name, ty) in oTy do
                     yield
                         match o.TryFind(name) with
-                        | None -> false
+                        | None -> true
                         | Some fv -> ty.AcceptsValue(fv.Value)
             } |> Seq.forall id
         | _ -> false
@@ -333,7 +333,7 @@ and CoreVariableType =
                 for KeyValue(name, ty) in oTy do
                     yield
                         match o.TryFind(name) with
-                        | None -> false
+                        | None -> true
                         | Some fv -> ty.AcceptsValueExpression(fv.Value)
             } |> Seq.forall id
         | _ -> false
