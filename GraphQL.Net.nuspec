@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>GraphQL.Net</id>
-    <version>0.3.5</version>
+    <id>GraphQL.Net.SellerCloud</id>
+    <version>0.3.6</version>
     <authors>Chad Kimes</authors>
     <owners>Chad Kimes</owners>
     <licenseUrl>https://github.com/ckimes89/graphql-net/blob/master/LICENSE.txt</licenseUrl>
