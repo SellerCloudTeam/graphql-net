@@ -38,12 +38,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GraphQL.Net">
-      <HintPath>..\..\..\SC.GraphqlNet\graphql-net-master\GraphQL.Net\bin\Debug\GraphQL.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="GraphQL.Parser">
-      <HintPath>..\..\..\SC.GraphqlNet\graphql-net-master\GraphQL.Parser\bin\Debug\GraphQL.Parser.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -76,6 +70,16 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphQL.Net\GraphQL.Net.csproj">
+      <Project>{530742a1-10d8-4255-837d-43d57b00ee50}</Project>
+      <Name>GraphQL.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphQL.Parser\GraphQL.Parser.fsproj">
+      <Project>{d5f65a61-8c03-46f1-86aa-7b6da4be25f5}</Project>
+      <Name>GraphQL.Parser</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
