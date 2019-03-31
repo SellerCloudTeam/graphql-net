@@ -431,7 +431,7 @@ type TypeHandler =
     static member Translate(rootHandler : ITypeHandler, name : string, validate : Func<'repr, bool>, translate : Func<'repr, 'output>) =
         new TranslationTypeHandler<'repr, 'output>
             ( rootHandler
-            , typeof<'output>.Name
+            , name
             , fun v -> validate.Invoke(v)
             , fun v -> translate.Invoke(v)
             ) :> ITypeHandler
