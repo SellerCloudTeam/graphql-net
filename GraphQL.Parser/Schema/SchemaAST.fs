@@ -336,7 +336,7 @@ and CoreVariableType =
                         | None -> true
                         | Some fv -> ty.AcceptsValueExpression(fv.Value)
             } |> Seq.forall id
-        | _ -> false
+        | _ -> true
 and VariableType(coreType: CoreVariableType, isNullable : bool) =
     member this.Type = coreType
     member this.Nullable = isNullable
