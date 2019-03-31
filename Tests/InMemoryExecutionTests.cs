@@ -46,7 +46,7 @@ namespace Tests
         [Test]
         public void AddAllFields()
         {
-            var schema = GraphQL<MemContext>.CreateDefaultSchema(() => new MemContext());
+            var schema = new GraphQLSchema<MemContext>(() => new MemContext());
             schema.AddType<User>().AddAllFields();
             schema.AddType<Account>().AddAllFields();
             schema.AddField("user", new { id = 0 }, (db, args) => db.Users.AsQueryable().FirstOrDefault(u => u.Id == args.id));

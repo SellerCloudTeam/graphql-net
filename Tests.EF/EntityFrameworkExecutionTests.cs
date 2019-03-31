@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Linq.Expressions;
-using GraphQL.Net;
+﻿using GraphQL.Net;
 using NUnit.Framework;
 using SQLite.CodeFirst;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
 namespace Tests.EF
 {
@@ -95,7 +93,7 @@ namespace Tests.EF
 
         private static GraphQL<EfContext> CreateDefaultContext()
         {
-            var schema = GraphQL<EfContext>.CreateDefaultSchema(() => new EfContext());
+            var schema = new GraphQLSchema<EfContext>(() => new EfContext());
             schema.AddScalar(new { year = 0, month = 0, day = 0 }, ymd => new DateTime(ymd.year, ymd.month, ymd.day));
             InitializeUserSchema(schema);
             InitializeAccountSchema(schema);
@@ -266,7 +264,7 @@ namespace Tests.EF
         [Test]
         public void AddAllFields()
         {
-            var schema = GraphQL<EfContext>.CreateDefaultSchema(() => new EfContext());
+            var schema = new GraphQLSchema<EfContext>(() => new EfContext());
             schema.AddType<User>().AddAllFields();
             schema.AddType<Account>().AddAllFields();
             schema.AddField("user", new { id = 0 }, (db, args) => db.Users.FirstOrDefault(u => u.Id == args.id));
