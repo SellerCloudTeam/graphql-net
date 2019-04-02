@@ -267,7 +267,7 @@ namespace GraphQL.Net
 
         private void AddTypeNameFields()
         {
-            var method = GetType().GetMethod("AddTypeNameField", BindingFlags.Instance | BindingFlags.NonPublic);
+            var method = typeof(GraphQLSchema<TContext>).GetMethod("AddTypeNameField", BindingFlags.Instance | BindingFlags.NonPublic);
             foreach (var type in _types.Where(t => !t.IsScalar))
             {
                 var genMethod = method.MakeGenericMethod(type.CLRType);
