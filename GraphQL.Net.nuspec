@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>GraphQL.Net.SellerCloud</id>
-    <version>0.3.8</version>
+    <version>0.3.9</version>
     <authors>Chad Kimes</authors>
     <owners>Chad Kimes</owners>
     <licenseUrl>https://github.com/ckimes89/graphql-net/blob/master/LICENSE.txt</licenseUrl>

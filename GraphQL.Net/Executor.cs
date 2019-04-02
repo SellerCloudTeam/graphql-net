@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using GraphQL.Net.SchemaAdapters;
+﻿using GraphQL.Net.SchemaAdapters;
 using GraphQL.Parser;
 using GraphQL.Parser.CS;
 using GraphQL.Parser.Execution;
 using Microsoft.FSharp.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace GraphQL.Net
 {
@@ -33,7 +33,7 @@ namespace GraphQL.Net
                 queryType = queryType.BaseType;
                 expressionOptions = schema.GetOptionsForQueryable(queryType);
             }
-            
+
             var queryExecSelections = query.Selections.Values();
             var selector = GetSelector(schema, field.Type, queryExecSelections, expressionOptions);
 
@@ -234,7 +234,7 @@ namespace GraphQL.Net
 
             // Any '__typename' selection have to be replaced by the '__typename' selection of the target type' '__typename'-field.
             var typeNameConditionHasToBeReplaced = selections.Any(s => s.Name == TypenameFieldSelector);
-            
+
             // Remove all '__typename'-selections as well as duplicates in the selections caused by fragments type condition selections.
             selections = selections
                 .Where(s => s.Name != TypenameFieldSelector)
@@ -305,7 +305,7 @@ namespace GraphQL.Net
             if (needsTypeCheck && options.TypeCheckInheritance)
             {
                 // The expression type has to be nullable
-                if (replacedBase.Type.IsValueType)
+                if (replacedBase.Type.IsValueType && Nullable.GetUnderlyingType(replacedBase.Type) == null)
                 {
                     replacedBase = Expression.Convert(replacedBase, typeof(Nullable<>).MakeGenericType(replacedBase.Type));
                 }
