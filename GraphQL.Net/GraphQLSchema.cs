@@ -222,6 +222,9 @@ namespace GraphQL.Net
             ischema.AddListField("types", s => s.Types);
             ischema.AddField("queryType", s => s.QueryType);
             ischema.AddField("mutationType", s => s.MutationType.OrDefault());
+            ischema.AddField("subscriptionType", s => default(IntroType));
+            // TODO: Add support for Subscription Type
+            // ischema.AddField("subscriptionType", s => s.SubscriptionType.OrDefault());
             ischema.AddListField("directives", s => s.Directives);
 
             var itype = AddType<IntroType>("__Type");
