@@ -239,6 +239,16 @@ namespace GraphQL.Net
                             : t.Fields.OrDefault().Where(f => !f.IsDeprecated).ToList()
                         : t.Fields.OrDefault());
 
+            itype.AddListField(
+                "enumValues",
+                new { includeDeprecated = default(bool?) },
+                (ctx, args, t)
+                    => args.includeDeprecated == false
+                        ? t.EnumValues.OrDefault() == null
+                            ? t.EnumValues.OrDefault()
+                            : t.EnumValues.OrDefault().Where(f => !f.IsDeprecated).ToList()
+                        : t.EnumValues.OrDefault());
+
             itype.AddListField("inputFields", t => t.InputFields.OrDefault());
             itype.AddField("ofType", s => s.OfType.OrDefault());
             itype.AddListField("interfaces", s => s.Interfaces.OrDefault());
