@@ -74,6 +74,11 @@ namespace GraphQL.Net
             return new GraphQLTypeBuilder<TContext, TEntity>(this, gqlType);
         }
 
+        protected bool ReferencesClrType(Type type)
+        {
+            return _types.Any(t => t.CLRType == type);
+        }
+
         public GraphQLTypeBuilder<TContext, TEntity> GetType<TEntity>()
         {
             var type = _types.FirstOrDefault(t => t.CLRType == typeof(TEntity));
