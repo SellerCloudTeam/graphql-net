@@ -27,6 +27,12 @@ namespace GraphQL.Net
             return ExecuteQuery(queryStr, queryContext, execContext);
         }
 
+        public IDictionary<string, object> ExecuteQuery(string queryStr, string operationName, TContext queryContext)
+        {
+            var execContext = DefaultExecContext.Instance;
+            return ExecuteQuery(queryStr, operationName, queryContext, execContext);
+        }
+
         public IDictionary<string, object> ExecuteQuery(string queryStr, IExecContext execContext)
         {
             if (_schema.ContextCreator == null)
@@ -41,6 +47,11 @@ namespace GraphQL.Net
 
         public IDictionary<string, object> ExecuteQuery(string queryStr, TContext queryContext, IExecContext execContext)
         {
+            return this.ExecuteQuery(queryStr, operationName: null, queryContext, execContext);
+        }
+
+        public IDictionary<string, object> ExecuteQuery(string queryStr, string operationName, TContext queryContext, IExecContext execContext)
+        {
             if (!_schema.Completed)
                 throw new InvalidOperationException("Schema must be Completed before executing a query. Try calling the schema's Complete method.");
 
@@ -48,7 +59,7 @@ namespace GraphQL.Net
                 throw new ArgumentException("Context must not be null.");
 
             var document = GraphQLDocument<Info>.Parse(_schema.Adapter, queryStr);
-            var operation = document.Operations.Single(); // TODO support multiple operations per document, look up by name
+            var operation = this.ResolveOperation(document, operationName);
             var execSelections = execContext.ToExecSelections(operation.Value);
 
             var outputs = new Dictionary<string, object>();
@@ -58,6 +69,28 @@ namespace GraphQL.Net
                 outputs[execSelection.Name] = Executor<TContext>.Execute(_schema, queryContext, field, execSelection);
             }
             return outputs;
+        }
+
+        private WithSource<Operation<Info>> ResolveOperation(GraphQLDocument<Info> document, string operationName)
+        {
+            // No operations in document
+            if (!document.Operations.Any()) throw new InvalidOperationException("No operations found in GraphQL document!");
+
+            // Only operation in document
+            if (document.Operations.Count == 1) return document.Operations.Single();
+
+            // Multiple operations in document, look up by name
+            if (string.IsNullOrEmpty(operationName)) throw new InvalidOperationException("Multiple operations found in GraphQL document but operationName was not provided!");
+
+            var longhandOperations = document.Operations
+                .Select(o => new { Original = o, Longhand = o.Value as Operation<Info>.LonghandOperation })
+                .Where(o => o.Longhand != null);
+
+            var longhandOperation = longhandOperations.FirstOrDefault(o => o.Longhand.Item.OperationName.OrDefault() == operationName);
+
+            if (longhandOperation == null) throw new InvalidOperationException($"Operation '{operationName}' not found in GraphQL document!");
+
+            return longhandOperation.Original;
         }
     }
 }
