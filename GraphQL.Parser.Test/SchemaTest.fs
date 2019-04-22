@@ -225,8 +225,36 @@ type SchemaTest() =
                                         friend(name: ""bob"") {
                                             friend(name: ""bob"") {
                                                 friend(name: ""bob"") {
-                                                    id
-                                                    name
+                                                    friend(name: ""bob"") {
+                                                        friend(name: ""bob"") {
+                                                            friend(name: ""bob"") {
+                                                                friend(name: ""bob"") {
+                                                                    friend(name: ""bob"") {
+                                                                        friend(name: ""bob"") {
+                                                                            friend(name: ""bob"") {
+                                                                                friend(name: ""bob"") {
+                                                                                    friend(name: ""bob"") {
+                                                                                        friend(name: ""bob"") {
+                                                                                            friend(name: ""bob"") {
+                                                                                                friend(name: ""bob"") {
+                                                                                                    friend(name: ""bob"") {
+                                                                                                        friend(name: ""bob"") {
+                                                                                                            id
+                                                                                                            name
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
