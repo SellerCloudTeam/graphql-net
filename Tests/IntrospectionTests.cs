@@ -32,8 +32,7 @@ namespace Tests
                               { name: 'total' },
                               { name: 'accountPaid' },
                               { name: 'abc' },
-                              { name: 'sub' },
-                              { name: '__typename' }
+                              { name: 'sub' }
                           ]
                       }
                   }");
@@ -55,8 +54,7 @@ namespace Tests
                               { name: 'total', type: { name: null, kind: 'NON_NULL', ofType: { name: 'Int', kind: 'SCALAR' } } },
                               { name: 'accountPaid', type: { name: null, kind: 'NON_NULL', ofType: { name: 'Boolean', kind: 'SCALAR' } } },
                               { name: 'abc', type: { name: 'String', kind: 'SCALAR', ofType: null } },
-                              { name: 'sub', type: { name: 'Sub', kind: 'OBJECT', ofType: null } },
-                              { name: '__typename', type: { name: 'String', kind: 'SCALAR', ofType: null } }
+                              { name: 'sub', type: { name: 'Sub', kind: 'OBJECT', ofType: null } }
                           ]
                       }
                   }");
