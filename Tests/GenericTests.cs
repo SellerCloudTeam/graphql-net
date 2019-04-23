@@ -82,7 +82,7 @@ namespace Tests
 
         public static void DateTimeFilter<TContext>(GraphQL<TContext> gql)
         {
-            var results = gql.ExecuteQuery("{ accountPaidBy(paid: { year: 2016 month: 1 day: 1 }) { id } }");
+            var results = gql.ExecuteQuery("{ accountPaidBy(paid: \"2016/1/1\") { id } }");
             Test.DeepEquals(results, "{ accountPaidBy: { id: 1 } }");
         }
 

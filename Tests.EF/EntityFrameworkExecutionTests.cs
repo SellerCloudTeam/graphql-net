@@ -94,7 +94,6 @@ namespace Tests.EF
         private static GraphQL<EfContext> CreateDefaultContext()
         {
             var schema = new GraphQLSchema<EfContext>(() => new EfContext());
-            schema.AddScalar(new { year = 0, month = 0, day = 0 }, ymd => new DateTime(ymd.year, ymd.month, ymd.day));
             InitializeUserSchema(schema);
             InitializeAccountSchema(schema);
             InitializeMutationSchema(schema);
