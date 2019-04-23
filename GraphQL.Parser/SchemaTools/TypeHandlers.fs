@@ -142,6 +142,17 @@ type BuiltinTypeHandler() =
                     } |> NamedType).NotNullable()
                 , fun v -> v.GetString() |> Guid.Parse |> box
                 )
+
+            new TypeMapping
+                ( typeof<DateTime>
+                ,
+                    ({ new ISchemaVariableType with
+                        member this.TypeName = "DateTime"
+                        member this.CoreType = PrimitiveType StringType
+                        member this.ValidateValue(value) = true
+                    } |> NamedType).NotNullable()
+                , fun v -> v.GetString() |> DateTime.Parse |> box
+                )
         ] |> Seq.map (fun t -> t.CLRType, t) |> dictionary
     interface ITypeHandler with
         member this.DefinedTypes =
