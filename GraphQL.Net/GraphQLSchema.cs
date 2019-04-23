@@ -25,7 +25,7 @@ namespace GraphQL.Net
 
         public GraphQLSchema()
         {
-            AddType<TContext>("queryType");
+            AddType<TContext>("SchemaRoot");
             AddDefaultExpressionOptions();
         }
 
@@ -228,7 +228,7 @@ namespace GraphQL.Net
             ischema.AddListField("directives", s => s.Directives);
 
             var itype = AddType<IntroType>("__Type");
-            itype.AddField("kind", t => t.Kind);
+            itype.AddField("kind", t => $"{t.Kind}");
             itype.AddField("name", t => t.Name.OrDefault());
             itype.AddField("description", t => t.Description.OrDefault());
 
@@ -239,8 +239,10 @@ namespace GraphQL.Net
                     => args.includeDeprecated == false
                         ? t.Fields.OrDefault() == null
                             ? t.Fields.OrDefault()
-                            : t.Fields.OrDefault().Where(f => !f.IsDeprecated).ToList()
-                        : t.Fields.OrDefault());
+                            : t.Fields.OrDefault().Where(f => !f.IsDeprecated && f.Name != "__typename").ToList()
+                        : t.Fields.OrDefault() == null
+                            ? t.Fields.OrDefault()
+                            : t.Fields.OrDefault().Where(f => f.Name != "__typename").ToList());
 
             itype.AddListField(
                 "enumValues",

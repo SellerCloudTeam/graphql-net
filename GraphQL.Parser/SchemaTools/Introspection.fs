@@ -93,7 +93,7 @@ type IntroType =
             }
         | ObjectType fieldTypes ->
             { IntroType.Default with
-                Kind = TypeKind.INPUT_OBJECT
+                Kind = TypeKind.SCALAR
                 InputFields = fieldTypes |> Seq.map IntroInputValue.Of |> Some
             }
     static member Of(varType : VariableType) =
