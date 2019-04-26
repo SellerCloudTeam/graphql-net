@@ -78,7 +78,7 @@ namespace GraphQL.Net
         // Mutation should be null UNLESS adding a mutation at the schema level
         internal GraphQLFieldBuilder<TContext, TField> AddListMutationInternal<TArgs, TField, TMutReturn>(string name, Func<TArgs, TMutReturn, Expression<Func<TContext, TEntity, IEnumerable<TField>>>> exprFunc, Func<TContext, TArgs, TMutReturn> mutation)
         {
-            var field = GraphQLField.NewMutation(_schema, name, exprFunc, typeof (IEnumerable<TField>), _type, mutation);
+            var field = GraphQLField.NewMutation(_schema, name, exprFunc, typeof(IEnumerable<TField>), _type, mutation);
             _type.OwnFields.Add(field);
             return new GraphQLFieldBuilder<TContext, TField>(field);
         }
@@ -129,8 +129,15 @@ namespace GraphQL.Net
                 _type.OwnFields.Add(CreateGenericField(prop));
         }
 
+        public void AddAllFields(Func<PropertyInfo, bool> ignoreField, Func<string, Type, string> fieldName = null)
+        {
+            foreach (var prop in typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                if (!ignoreField(prop))
+                    _type.OwnFields.Add(CreateGenericField(prop, fieldName(prop.Name, prop.PropertyType)));
+        }
+
         // unsafe generic magic to create a GQLField instance
-        private GraphQLField CreateGenericField(PropertyInfo prop)
+        private GraphQLField CreateGenericField(PropertyInfo prop, string name = null)
         {
             // build selector expression, e.g.: (db, p) => p.Id
             var entityParam = Expression.Parameter(typeof(TEntity), "p");
@@ -142,7 +149,7 @@ namespace GraphQL.Net
             var argsExpr = Expression.Lambda(Expression.Quote(lambda), objectParam);
             var exprFunc = argsExpr.Compile();
 
-            return GraphQLField.New(_schema, prop.Name.ToCamelCase(), (Func<object, LambdaExpression>) exprFunc, prop.PropertyType, _type);
+            return GraphQLField.New(_schema, (name ?? prop.Name).ToCamelCase(), (Func<object, LambdaExpression>)exprFunc, prop.PropertyType, _type);
         }
 
         public GraphQLFieldBuilder<TContext, TField> AddPostField<TField>(string name, Func<TField> fieldFunc)
@@ -150,6 +157,33 @@ namespace GraphQL.Net
             var field = GraphQLField.Post(_schema, name, fieldFunc);
             _type.OwnFields.Add(field);
             return new GraphQLFieldBuilder<TContext, TField>(field);
+        }
+
+        public GraphQLTypeBuilder<TContext, TEntity> RemoveField(string name)
+        {
+            var field = _type.OwnFields.FirstOrDefault(f => f.Name == name);
+
+            if (field == null) throw new KeyNotFoundException($"Field {name} does not exist on type {typeof(TEntity).Name}!");
+
+            _type.OwnFields.Remove(field);
+
+            return this;
+        }
+
+        public GraphQLTypeBuilder<TContext, TEntity> RemoveFields(params string[] names)
+        {
+            foreach (var name in names)
+                this.RemoveField(name);
+
+            return this;
+        }
+
+        public GraphQLTypeBuilder<TContext, TEntity> RemoveFields(IEnumerable<string> names)
+        {
+            foreach (var name in names)
+                this.RemoveField(name);
+
+            return this;
         }
     }
 }

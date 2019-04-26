@@ -66,7 +66,7 @@ namespace Tests
             // TODO: Use Test.DeepEquals once we get all the primitive type noise sorted out
 
             var gql = MemContext.CreateDefaultContext();
-            var schema = (IDictionary<string, object>) gql.ExecuteQuery("{ __schema { types { name, kind, interfaces { name } } } }")["__schema"];
+            var schema = (IDictionary<string, object>) gql.ExecuteQuery("{ __schema { types { name, kind, interfaces { name }, enumValues { name } } } }")["__schema"];
             var types = (List<IDictionary<string, object>>) schema["types"];
 
             var intType = types.First(t => (string) t["name"] == "Int");
@@ -78,6 +78,11 @@ namespace Tests
             Assert.AreEqual(userType["name"], "User");
             Assert.AreEqual(userType["kind"].ToString(), "OBJECT");
             Assert.AreEqual(((List<IDictionary<string, object>>)userType["interfaces"]).Count, 0);
+
+            var enumType = types.First(t => (string)t["name"] == "MaterialType");
+            Assert.AreEqual(enumType["name"], "MaterialType");
+            Assert.AreEqual(enumType["kind"].ToString(), "ENUM");
+            Assert.AreNotEqual(((List<IDictionary<string, object>>)enumType["enumValues"]).Count, 0);
         }
     }
 }
