@@ -292,6 +292,11 @@ namespace GraphQL.Net
             // expr is form of: (context, entity) => entity.Field
             var expr = field.GetExpression(map.Arguments.Values());
 
+            if (toMember == null)
+            {
+                throw new InvalidOperationException($"Invalid query or fragment detected! Field {field.Name} does not exist on proxy type {toType.Name}!");
+            }
+
             // The field might be defined on sub-types of the specified type, so add a type cast if necessary.
             // If appropriate, `entity.Field` becomes `(entity as TFieldDefiningType).Field`
             var typeCastedBaseExpression = needsTypeCheck ? Expression.TypeAs(baseBindingExpr, field.DefiningType.CLRType) : baseBindingExpr;
