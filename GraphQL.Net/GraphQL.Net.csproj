@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.4.5</Version>
+    <PackageId>GraphQL.Net.SellerCloud</PackageId>
+    <Company>SellerCloud</Company>
+    <Product>GraphQL.Net.SellerCloud</Product>
+    <Authors>SellerCloud</Authors>
   </PropertyGroup>
 
   <ItemGroup>

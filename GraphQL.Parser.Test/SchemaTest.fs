@@ -136,7 +136,7 @@ type SchemaTest() =
             failwith "Document resolved against schema when it shouldn't have!"
         with
         | :? SourceException as ex ->
-            if (ex.Message.Contains(reason)) then ()
+            if (ex.Message.Contains(reason : string)) then ()
             else reraise()
     [<Test>]
     member __.TestGoodUserQuery() =
