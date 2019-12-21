@@ -7,6 +7,7 @@
     <Company>SellerCloud</Company>
     <Product>GraphQL.Net.SellerCloud</Product>
     <Authors>SellerCloud</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
