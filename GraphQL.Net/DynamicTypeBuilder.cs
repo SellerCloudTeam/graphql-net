@@ -13,7 +13,7 @@ namespace GraphQL.Net
 
         static DynamicTypeBuilder()
         {
-            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(AssemblyName), AssemblyBuilderAccess.RunAndSave);
+            var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(AssemblyName), AssemblyBuilderAccess.RunAndCollect);
             ModuleBuilder = assemblyBuilder.DefineDynamicModule(AssemblyName + ".dll");
         }
 
@@ -23,7 +23,7 @@ namespace GraphQL.Net
                 TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.AutoClass | TypeAttributes.AnsiClass | TypeAttributes.Serializable | TypeAttributes.BeforeFieldInit);
             foreach (var prop in properties)
                 CreateProperty(typeBuilder, prop.Key, prop.Value);
-            return typeBuilder.CreateType();
+            return typeBuilder.CreateTypeInfo();
         }
 
         private static void CreateProperty(TypeBuilder typeBuilder, string name, Type type)
