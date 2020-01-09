@@ -4,6 +4,7 @@ using GraphQL.Parser.Execution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace GraphQL.Net
 {
@@ -66,7 +67,15 @@ namespace GraphQL.Net
             foreach (var execSelection in execSelections.Select(s => s.Value))
             {
                 var field = execSelection.SchemaField.Field();
-                outputs[execSelection.Name] = Executor<TContext>.Execute(_schema, queryContext, field, execSelection);
+
+                try
+                {
+                    outputs[execSelection.Name] = Executor<TContext>.Execute(_schema, queryContext, field, execSelection);
+                }
+                catch (TargetInvocationException tex) when (tex.InnerException != null)
+                {
+                    throw tex.InnerException;
+                }
             }
             return outputs;
         }
