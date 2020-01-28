@@ -8,10 +8,18 @@
     <Product>GraphQL.Net.SellerCloud</Product>
     <Authors>SellerCloud</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <RepositoryUrl>https://github.com/SellerCloudTeam/graphql-net.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SellerCloudTeam/graphql-net</PackageProjectUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
