@@ -6,6 +6,10 @@
     <Version>1.0.0.1</Version>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
+    <IncludeSymbols>true</IncludeSymbols>
+    <RepositoryUrl>https://github.com/SellerCloudTeam/graphql-net.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SellerCloudTeam/graphql-net</PackageProjectUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +28,10 @@
 
   <ItemGroup>
     <PackageReference Include="FParsec-Pipes" Version="1.1.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
